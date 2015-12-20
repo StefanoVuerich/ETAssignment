@@ -2,9 +2,9 @@ package com.eurotech.assignment.builder;
 
 import com.eurotech.assignment.contracts.AbstractSimpleFilter;
 import com.eurotech.assignment.contracts.AbstractSimpleFilterBuilder;
-import com.eurotech.assignment.filters.IsPropertyPresentFilter;
-import com.eurotech.assignment.filters.PropertyComparatorFilter;
-import com.eurotech.assignment.filters.RegexFilter;
+import com.eurotech.assignment.filters.simple.IsPropertyPresentFilter;
+import com.eurotech.assignment.filters.simple.PropertyComparatorFilter;
+import com.eurotech.assignment.filters.simple.RegexFilter;
 import com.eurotech.assignment.utils.Comparator;
 import com.eurotech.assignment.utils.ConcatOperator;
 

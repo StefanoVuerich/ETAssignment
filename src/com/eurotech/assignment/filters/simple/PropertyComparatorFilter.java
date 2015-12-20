@@ -1,4 +1,4 @@
-package com.eurotech.assignment.filters;
+package com.eurotech.assignment.filters.simple;
 
 import java.util.Map;
 

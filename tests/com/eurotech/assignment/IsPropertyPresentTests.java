@@ -1,8 +1,7 @@
 package com.eurotech.assignment;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.junit.Test;
@@ -11,9 +10,7 @@ import com.eurotech.assignment.builder.Director;
 import com.eurotech.assignment.builder.SimpleFilterBuilder;
 import com.eurotech.assignment.contracts.AbstractSimpleFilter;
 import com.eurotech.assignment.contracts.AbstractSimpleFilterBuilder;
-import com.eurotech.assignment.filters.IsPropertyPresentFilter;
-import com.eurotech.assignment.filters.PropertyComparatorFilter;
-import com.eurotech.assignment.utils.Comparator;
+import com.eurotech.assignment.filters.simple.IsPropertyPresentFilter;
 
 public class IsPropertyPresentTests {
 

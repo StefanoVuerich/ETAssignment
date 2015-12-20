@@ -1,6 +1,6 @@
 package com.eurotech.assignment;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Map;
 
@@ -10,8 +10,7 @@ import com.eurotech.assignment.builder.Director;
 import com.eurotech.assignment.builder.SimpleFilterBuilder;
 import com.eurotech.assignment.contracts.AbstractSimpleFilter;
 import com.eurotech.assignment.contracts.AbstractSimpleFilterBuilder;
-import com.eurotech.assignment.filters.IsPropertyPresentFilter;
-import com.eurotech.assignment.filters.RegexFilter;
+import com.eurotech.assignment.filters.simple.RegexFilter;
 
 public class RegexFilterTests {
 

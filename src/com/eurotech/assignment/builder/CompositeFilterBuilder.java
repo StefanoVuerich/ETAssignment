@@ -3,7 +3,7 @@ package com.eurotech.assignment.builder;
 import com.eurotech.assignment.contracts.AbstractCompositeFilter;
 import com.eurotech.assignment.contracts.AbstractCompositeFilterBuilder;
 import com.eurotech.assignment.contracts.AbstractSimpleFilter;
-import com.eurotech.assignment.filters.CompositeFilter;
+import com.eurotech.assignment.filters.composite.CompositeFilter;
 
 public class CompositeFilterBuilder extends AbstractCompositeFilterBuilder{
 

@@ -1,6 +1,6 @@
 package com.eurotech.assignment;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -14,7 +14,7 @@ import com.eurotech.assignment.contracts.AbstractCompositeFilter;
 import com.eurotech.assignment.contracts.AbstractCompositeFilterBuilder;
 import com.eurotech.assignment.contracts.AbstractSimpleFilter;
 import com.eurotech.assignment.contracts.AbstractSimpleFilterBuilder;
-import com.eurotech.assignment.filters.IsPropertyPresentFilter;
+import com.eurotech.assignment.filters.simple.IsPropertyPresentFilter;
 import com.eurotech.assignment.utils.ConcatOperator;
 
 public class CompositeFilterTests {

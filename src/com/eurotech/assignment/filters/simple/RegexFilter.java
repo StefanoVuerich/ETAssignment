@@ -1,4 +1,4 @@
-package com.eurotech.assignment.filters;
+package com.eurotech.assignment.filters.simple;
 
 import java.util.Map;
 
@@ -6,11 +6,12 @@ import com.eurotech.assignment.contracts.AbstractSimpleFilter;
 import com.eurotech.assignment.utils.Comparator;
 import com.eurotech.assignment.utils.ConcatOperator;
 
-public class IsPropertyPresentFilter extends AbstractSimpleFilter{
+public class RegexFilter extends AbstractSimpleFilter{
 
-	public static final String TAG = IsPropertyPresentFilter.class.getSimpleName();
+	public static final String TAG = RegexFilter.class.getSimpleName();
 	
 	private String property;
+	private String regex;
 	
 	@Override
 	public void setProperty(String property) {
@@ -18,16 +19,18 @@ public class IsPropertyPresentFilter extends AbstractSimpleFilter{
 	}
 
 	@Override
-	public void setValue(String value) {}
-	
-	@Override
-	public boolean matches(Map<String, String> resource) {
-		return resource.containsKey(property);
+	public void setValue(String value) {
+		this.regex = value;
 	}
 
 	@Override
 	public void setComparator(Comparator comparator) {}
 	
+	@Override
+	public ConcatOperator getConcatOperator() {
+		return super.concatOperator;
+	}
+
 	@Override
 	public void setConcatOperator(ConcatOperator operator) {
 		if(operator != null)
@@ -35,7 +38,10 @@ public class IsPropertyPresentFilter extends AbstractSimpleFilter{
 	}
 
 	@Override
-	public ConcatOperator getConcatOperator() {
-		return super.concatOperator;
+	public boolean matches(Map<String, String> resource) {
+		if(resource.containsKey(property))
+			return resource.get(property).matches(regex);
+		else
+			return false;
 	}
 }

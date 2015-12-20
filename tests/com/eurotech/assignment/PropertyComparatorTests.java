@@ -1,6 +1,6 @@
 package com.eurotech.assignment;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Map;
 
@@ -10,7 +10,7 @@ import com.eurotech.assignment.builder.Director;
 import com.eurotech.assignment.builder.SimpleFilterBuilder;
 import com.eurotech.assignment.contracts.AbstractSimpleFilter;
 import com.eurotech.assignment.contracts.AbstractSimpleFilterBuilder;
-import com.eurotech.assignment.filters.PropertyComparatorFilter;
+import com.eurotech.assignment.filters.simple.PropertyComparatorFilter;
 import com.eurotech.assignment.utils.Comparator;
 
 public class PropertyComparatorTests {

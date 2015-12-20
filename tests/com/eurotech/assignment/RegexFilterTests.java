@@ -6,10 +6,8 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.eurotech.assignment.builder.Director;
-import com.eurotech.assignment.builder.SimpleFilterBuilder;
-import com.eurotech.assignment.contracts.AbstractSimpleFilter;
-import com.eurotech.assignment.contracts.AbstractSimpleFilterBuilder;
+import com.eurotech.assignment.contracts.IFilter;
+import com.eurotech.assignment.factories.FilterFactory;
 import com.eurotech.assignment.filters.simple.RegexFilter;
 
 public class RegexFilterTests {
@@ -18,21 +16,18 @@ public class RegexFilterTests {
 	public void test() {
 		
 		Map<String, String> user = UserCreator.createUser();
-
-		AbstractSimpleFilterBuilder sBuilder;
-		Director director;
-		AbstractSimpleFilter filter;
+		IFilter filter;
 
 		// Testing regex present funcionality
-		
-		sBuilder = new SimpleFilterBuilder(RegexFilter.TAG);
-		director = new Director(sBuilder);
-		director.makeSimpleFilter("role", "[a-z]+", null, null);
-		filter = director.getSimpleFilter();
 
+		filter = new FilterFactory().getFilter(RegexFilter.TAG, "role", "[a-z]+");
 		assertEquals("All characters are lowercase", true, filter.matches(user));
 		
 		user.put("role", "Administrator");
 		assertEquals("All characters are not more lowercase", false, filter.matches(user));
+		
+		// This will throw PropertyNotFoundException
+		filter = new FilterFactory().getFilter(RegexFilter.TAG, "notpresentproperty", "[a-z]+");
+		filter.matches(user);
 	}
 }

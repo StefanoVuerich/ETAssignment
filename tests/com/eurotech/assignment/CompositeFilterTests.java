@@ -7,15 +7,11 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.eurotech.assignment.builder.CompositeFilterBuilder;
 import com.eurotech.assignment.builder.Director;
-import com.eurotech.assignment.builder.SimpleFilterBuilder;
-import com.eurotech.assignment.contracts.AbstractCompositeFilter;
-import com.eurotech.assignment.contracts.AbstractCompositeFilterBuilder;
-import com.eurotech.assignment.contracts.AbstractSimpleFilter;
 import com.eurotech.assignment.contracts.AbstractSimpleFilterBuilder;
+import com.eurotech.assignment.contracts.IFilter;
+import com.eurotech.assignment.factories.FilterFactory;
 import com.eurotech.assignment.filters.simple.IsPropertyPresentFilter;
-import com.eurotech.assignment.utils.ConcatOperator;
 
 public class CompositeFilterTests {
 
@@ -26,32 +22,21 @@ public class CompositeFilterTests {
 
 		AbstractSimpleFilterBuilder sBuilder;
 		Director director;
-		AbstractSimpleFilter filterATrue, filterBTrue;
+		IFilter filterA, filterB, compositeFilter;
 
 		// Testing is property present funcionality
-
-		sBuilder = new SimpleFilterBuilder(IsPropertyPresentFilter.TAG);
-		director = new Director(sBuilder);
 		
-		director.makeSimpleFilter("firstname", null, null, null);
-		filterATrue = director.getSimpleFilter();
-		assertEquals("Property firstname is present", true, filterATrue.matches(user));
+		filterA = new FilterFactory().getFilter(IsPropertyPresentFilter.TAG, "firstname");
+		assertEquals("Property firstname is present", true, filterA.matches(user));
 
-		director.makeSimpleFilter("halla", null, null, ConcatOperator.AND);
-		filterBTrue = director.getSimpleFilter();
-		assertEquals("Property firstname is present", false, filterBTrue.matches(user));
+		filterB = new FilterFactory().getFilter(IsPropertyPresentFilter.TAG, "notpresent");
+		assertEquals("Property firstname is present", false, filterB.matches(user));
 		
-		ArrayList<AbstractSimpleFilter> filters = new ArrayList<AbstractSimpleFilter>();
-		filters.add(filterATrue);
-		filters.add(filterBTrue);
+		ArrayList<IFilter> filters = new ArrayList<IFilter>();
+		filters.add(filterA);
+		filters.add(filterB);
 				
-		AbstractCompositeFilterBuilder cBuilder = new CompositeFilterBuilder();
-		director = new Director(cBuilder);
-		director.makeCompositeFilter(filters);
-		AbstractCompositeFilter cFilter = director.getCompositeFilter();
-		assertEquals("Both filters are true AND", false, cFilter.matches(user));
-		
-		System.out.println("END APP");
+		compositeFilter = new FilterFactory().getFilter(filters);
+		assertEquals("Both filters are true AND", false, compositeFilter.matches(user));
 	}
-
 }

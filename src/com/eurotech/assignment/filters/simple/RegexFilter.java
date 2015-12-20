@@ -3,24 +3,25 @@ package com.eurotech.assignment.filters.simple;
 import java.util.Map;
 
 import com.eurotech.assignment.contracts.AbstractSimpleFilter;
+import com.eurotech.assignment.customexceptions.PropertyNotFoundException;
 import com.eurotech.assignment.utils.Comparator;
 import com.eurotech.assignment.utils.ConcatOperator;
+import com.eurotech.assignment.utils.IsPropertyPresentTester;
 
 public class RegexFilter extends AbstractSimpleFilter{
 
 	public static final String TAG = RegexFilter.class.getSimpleName();
 	
-	private String property;
-	private String regex;
-	
 	@Override
 	public void setProperty(String property) {
-		this.property = property;
+		if(property != null)
+			this.property = property;
 	}
 
 	@Override
 	public void setValue(String value) {
-		this.regex = value;
+		if(value != null)
+			regex = value;
 	}
 
 	@Override
@@ -28,20 +29,30 @@ public class RegexFilter extends AbstractSimpleFilter{
 	
 	@Override
 	public ConcatOperator getConcatOperator() {
-		return super.concatOperator;
+		return concatOperator;
 	}
 
 	@Override
 	public void setConcatOperator(ConcatOperator operator) {
 		if(operator != null)
-			super.concatOperator = operator;
+			concatOperator = operator;
 	}
 
 	@Override
 	public boolean matches(Map<String, String> resource) {
-		if(resource.containsKey(property))
-			return resource.get(property).matches(regex);
-		else
-			return false;
+		
+		boolean result = false;
+		
+		try{
+			
+			IsPropertyPresentTester.test(resource, property);
+			result = resource.get(property).matches(regex);
+			
+		} catch(PropertyNotFoundException ex) {
+			
+			System.out.println(ex.getMessage());
+		}
+		
+		return result;
 	}
 }

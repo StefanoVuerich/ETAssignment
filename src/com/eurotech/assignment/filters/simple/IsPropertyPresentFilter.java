@@ -10,11 +10,10 @@ public class IsPropertyPresentFilter extends AbstractSimpleFilter{
 
 	public static final String TAG = IsPropertyPresentFilter.class.getSimpleName();
 	
-	private String property;
-	
 	@Override
 	public void setProperty(String property) {
-		this.property = property;
+		if(property != null)
+			this.property = property;
 	}
 
 	@Override
@@ -31,11 +30,11 @@ public class IsPropertyPresentFilter extends AbstractSimpleFilter{
 	@Override
 	public void setConcatOperator(ConcatOperator operator) {
 		if(operator != null)
-			super.concatOperator = operator;
+			concatOperator = operator;
 	}
 
 	@Override
 	public ConcatOperator getConcatOperator() {
-		return super.concatOperator;
+		return concatOperator;
 	}
 }

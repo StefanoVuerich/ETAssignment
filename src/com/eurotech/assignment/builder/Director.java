@@ -6,6 +6,7 @@ import com.eurotech.assignment.contracts.AbstractCompositeFilter;
 import com.eurotech.assignment.contracts.AbstractCompositeFilterBuilder;
 import com.eurotech.assignment.contracts.AbstractSimpleFilter;
 import com.eurotech.assignment.contracts.AbstractSimpleFilterBuilder;
+import com.eurotech.assignment.contracts.IFilter;
 import com.eurotech.assignment.utils.Comparator;
 import com.eurotech.assignment.utils.ConcatOperator;
 
@@ -43,9 +44,9 @@ public class Director {
 		sBuilder.setConcatOperator(operator);
 	}
 	
-	public void makeCompositeFilter(List<AbstractSimpleFilter> sFilters){
+	public void makeCompositeFilter(List<IFilter> sFilters){
 		
-		for(AbstractSimpleFilter sFilter : sFilters)
+		for(IFilter sFilter : sFilters)
 			cBuilder.addFilter(sFilter);			
 	}
 }

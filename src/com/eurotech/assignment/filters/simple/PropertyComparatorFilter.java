@@ -3,44 +3,48 @@ package com.eurotech.assignment.filters.simple;
 import java.util.Map;
 
 import com.eurotech.assignment.contracts.AbstractSimpleFilter;
+import com.eurotech.assignment.customexceptions.PropertyNotFoundException;
 import com.eurotech.assignment.utils.Comparator;
 import com.eurotech.assignment.utils.ConcatOperator;
+import com.eurotech.assignment.utils.IsPropertyPresentTester;
 
 public class PropertyComparatorFilter extends AbstractSimpleFilter {
 
 	public static final String TAG = PropertyComparatorFilter.class.getSimpleName();
 
-	private String property;
-	private String value;
-	private Comparator comparator;
-
 	@Override
 	public void setProperty(String property) {
-		this.property = property;
+		if (property != null)
+			this.property = property;
 	}
 
 	@Override
 	public void setValue(String value) {
-		this.value = value;
+		if (value != null)
+			this.value = value;
 	}
 
 	@Override
 	public void setComparator(Comparator comparator) {
-		this.comparator = comparator;
+		if (comparator != null)
+			this.comparator = comparator;
 	}
 
 	@Override
 	public void setConcatOperator(ConcatOperator operator) {
-		if(operator != null)
-			super.concatOperator = operator;
+		if (operator != null)
+			concatOperator = operator;
 	}
 
 	@Override
 	public boolean matches(Map<String, String> resource) {
 
-		if (resource.containsKey(property)) {
+		boolean result = false;
 
-			boolean result = false;
+		try {
+
+			IsPropertyPresentTester.test(resource, property);
+
 			int inValue = -1, propertyValue = -1;
 			boolean isNumber = true;
 
@@ -52,7 +56,7 @@ public class PropertyComparatorFilter extends AbstractSimpleFilter {
 				isNumber = false;
 			}
 
-			switch (comparator) {
+			switch (super.comparator) {
 
 			case PLUS:
 				if (isNumber && inValue >= 0 && propertyValue >= 0)
@@ -75,13 +79,16 @@ public class PropertyComparatorFilter extends AbstractSimpleFilter {
 				}
 				break;
 			}
-			return result;
-		} else
-			return false;
+
+		} catch (PropertyNotFoundException ex) {
+
+			System.out.println(ex.getMessage());
+		}
+		return result;
 	}
 
 	@Override
 	public ConcatOperator getConcatOperator() {
-		return super.concatOperator;
+		return concatOperator;
 	}
 }

@@ -6,6 +6,10 @@ import com.eurotech.assignment.utils.ConcatOperator;
 public abstract class AbstractSimpleFilter implements IFilter {
 
 	protected ConcatOperator concatOperator = ConcatOperator.AND;
+	protected String property = "";
+	protected String value = "";
+	protected String regex = "";
+	protected Comparator comparator = Comparator.EQUALS;
 	
 	public abstract void setProperty(String property);
 	

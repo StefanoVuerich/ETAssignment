@@ -2,6 +2,7 @@ package com.eurotech.assignment;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.eurotech.assignment.builder.CompositeFilterBuilder;
@@ -11,10 +12,15 @@ import com.eurotech.assignment.contracts.AbstractCompositeFilter;
 import com.eurotech.assignment.contracts.AbstractCompositeFilterBuilder;
 import com.eurotech.assignment.contracts.AbstractSimpleFilter;
 import com.eurotech.assignment.contracts.AbstractSimpleFilterBuilder;
+import com.eurotech.assignment.contracts.IFilter;
+import com.eurotech.assignment.factories.FilterFactory;
 import com.eurotech.assignment.filters.IsPropertyPresentFilter;
 import com.eurotech.assignment.filters.PropertyComparatorFilter;
 import com.eurotech.assignment.filters.RegexFilter;
+import com.eurotech.assignment.models.ConcatValue;
 import com.eurotech.assignment.utils.Comparator;
+import com.eurotech.assignment.utils.ConcatOperator;
+import com.eurotech.assignment.utils.Evaluator;
 
 public class Main {
 
@@ -37,6 +43,10 @@ public class Main {
 		director.makeSimpleFilter("firstname", null, null, null);
 		filterA = director.getSimpleFilter();
 		assert filterA.matches(user);
+		
+		IFilter filter = new FilterFactory()
+				.getFilter(IsPropertyPresentFilter.TAG, "firstname", null, null, null);
+		assert filter.matches(user);
 		
 		sBuilder = new SimpleFilterBuilder(PropertyComparatorFilter.TAG);
 		director = new Director(sBuilder);

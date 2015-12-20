@@ -6,6 +6,8 @@ import java.util.Map;
 
 import com.eurotech.assignment.contracts.AbstractCompositeFilter;
 import com.eurotech.assignment.contracts.AbstractSimpleFilter;
+import com.eurotech.assignment.models.ConcatValue;
+import com.eurotech.assignment.utils.Evaluator;
 
 public class CompositeFilter extends AbstractCompositeFilter {
 
@@ -14,42 +16,24 @@ public class CompositeFilter extends AbstractCompositeFilter {
 
 	@Override
 	public void addFilter(AbstractSimpleFilter filter) {
-		
+
 		filters.add(filter);
 	}
 
 	@Override
 	public boolean matches(Map<String, String> resource) {
-		
-		// first of all check if the composite filter has more than one filter
-		
-		this.resource = resource;
-		return evaluate(filters.get(0));
-	}
 
-	private boolean evaluate(AbstractSimpleFilter filter) {
+		List<ConcatValue> values = new ArrayList<ConcatValue>();
 
-		boolean result = filter.matches(resource);
+		int i = 0;
 
-		for (int i = 1; i < filters.size(); ++i) {
+		while (i < filters.size()) {
 
-			filter = filters.get(i);
-
-			switch (filter.getConcatOperator()) {
-
-			case AND:
-				result = result && filter.matches(resource);
-				break;
-
-			case OR:
-				result = result || filter.matches(resource);
-				break;
-
-			case NOT:
-				result = result && !filter.matches(resource);
-				break;
-			}
+			AbstractSimpleFilter tmpFilter = filters.get(i);
+			values.add(new ConcatValue(tmpFilter.matches(resource), tmpFilter.getConcatOperator()));
+			
+			++i;
 		}
-		return result;
+		return Evaluator.eveluate(values);
 	}
 }

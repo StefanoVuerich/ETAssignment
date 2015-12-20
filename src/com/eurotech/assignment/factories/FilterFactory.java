@@ -44,6 +44,9 @@ public class FilterFactory implements IFilterFactory {
 	@Override
 	public IFilter getFilter(List<IFilter> filters) {
 		
+		if(filters == null)
+			return null;
+		
 		AbstractCompositeFilterBuilder cBuilder = new CompositeFilterBuilder();
 		director = new Director(cBuilder);
 		director.makeCompositeFilter(filters);

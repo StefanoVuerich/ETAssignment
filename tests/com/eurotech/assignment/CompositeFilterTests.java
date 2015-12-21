@@ -34,9 +34,9 @@ public class CompositeFilterTests {
 				ConcatOperator.AND);
 		assertEquals("Property notpresent is present", false, filterB.matches(user));
 		
-		filterC = new FilterFactory().getFilter(IsPropertyPresentFilter.TAG, "firstname", null, null,
+		filterC = new FilterFactory().getFilter(IsPropertyPresentFilter.TAG, "age", null, null,
 				ConcatOperator.OR);
-		assertEquals("Property lalla is present", true, filterC.matches(user));
+		assertEquals("Property age is present", true, filterC.matches(user));
 
 		filters.add(filterA);
 		filters.add(filterB);

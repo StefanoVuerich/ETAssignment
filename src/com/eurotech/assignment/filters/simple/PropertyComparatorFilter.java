@@ -56,7 +56,7 @@ public class PropertyComparatorFilter extends AbstractSimpleFilter {
 				isNumber = false;
 			}
 
-			switch (super.comparator) {
+			switch (comparator) {
 
 			case PLUS:
 				if (isNumber && inValue >= 0 && propertyValue >= 0)
@@ -75,6 +75,7 @@ public class PropertyComparatorFilter extends AbstractSimpleFilter {
 				else {
 					String first = resource.get(property);
 					String second = value;
+					// ensure case insensitivity
 					result = first.toLowerCase().equals(second.toLowerCase());
 				}
 				break;

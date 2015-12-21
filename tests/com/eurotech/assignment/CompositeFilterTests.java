@@ -19,46 +19,54 @@ public class CompositeFilterTests {
 
 	@Test
 	public void test() {
-		
+
 		Map<String, String> user = UserCreator.createUser();
 
-		AbstractSimpleFilterBuilder sBuilder;
-		Director director;
-		IFilter filterA, filterB, compositeFilter;
+		IFilter filterA, filterB, filterC, compositeFilter;
 		ArrayList<IFilter> filters = new ArrayList<IFilter>();
 
 		// Testing is property present funcionality
-		
+
 		filterA = new FilterFactory().getFilter(IsPropertyPresentFilter.TAG, "firstname");
 		assertEquals("Property firstname is present", true, filterA.matches(user));
 
-		filterB = new FilterFactory().getFilter(IsPropertyPresentFilter.TAG, "notpresent", null, null, ConcatOperator.AND);
-		assertEquals("Property not present is present", false, filterB.matches(user));
+		filterB = new FilterFactory().getFilter(IsPropertyPresentFilter.TAG, "notpresent", null, null,
+				ConcatOperator.AND);
+		assertEquals("Property notpresent is present", false, filterB.matches(user));
 		
+		filterC = new FilterFactory().getFilter(IsPropertyPresentFilter.TAG, "firstname", null, null,
+				ConcatOperator.OR);
+		assertEquals("Property lalla is present", true, filterC.matches(user));
+
 		filters.add(filterA);
 		filters.add(filterB);
-				
+		filters.add(filterC);
+
 		compositeFilter = new FilterFactory().getFilter(filters);
-		assertEquals("One filters is true and one filter is false", false, compositeFilter.matches(user));
+		assertEquals("true && false || true", true, compositeFilter.matches(user));
 		filters.clear();
-		
+
 		// changes
-		
-		filterB = new FilterFactory().getFilter(IsPropertyPresentFilter.TAG, "notpresent", null, null, ConcatOperator.OR);
+
+		filterB = new FilterFactory().getFilter(IsPropertyPresentFilter.TAG, "notpresent", null, null,
+				ConcatOperator.OR);
 		filters.add(filterA);
 		filters.add(filterB);
-		
+
 		compositeFilter = new FilterFactory().getFilter(filters);
-		assertEquals("Property firstname is present or property notpresent is present", true, compositeFilter.matches(user));
+		assertEquals("Property firstname is present or property notpresent is present", true,
+				compositeFilter.matches(user));
 		filters.clear();
-		
-		// changes 
-		
-		filterB = new FilterFactory().getFilter(IsPropertyPresentFilter.TAG, "notpresent", null, null, ConcatOperator.AND_NOT);
+
+		// changes
+
+		filterB = new FilterFactory().getFilter(IsPropertyPresentFilter.TAG, "notpresent", null, null,
+				ConcatOperator.AND_NOT);
 		filters.add(filterA);
 		filters.add(filterB);
-		
+
 		compositeFilter = new FilterFactory().getFilter(filters);
-		assertEquals("Property firstname is present and property notpresent is not present", true, compositeFilter.matches(user));
+		assertEquals("Property firstname is present and property notpresent is not present", true,
+				compositeFilter.matches(user));
 	}
 }

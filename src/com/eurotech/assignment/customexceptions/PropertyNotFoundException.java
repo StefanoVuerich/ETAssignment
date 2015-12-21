@@ -2,7 +2,7 @@ package com.eurotech.assignment.customexceptions;
 
 public class PropertyNotFoundException extends Exception{
 
-	private static final long serialVersionUID = 9100240586045333802L;
+	private static final long serialVersionUID = 1L;
 	private String property;
 	
 	public PropertyNotFoundException(String property) {
